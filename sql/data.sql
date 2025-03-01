@@ -1,0 +1,1 @@
+INSERT INTO users(id, balance, last_updated) VALUES ("ethan", 10, 0);

@@ -1,0 +1,10 @@
+command_name command_desc param1_name param1_desc param1_required ...
+help|Print this message
+create|Create an account
+balance|View your balance
+work|Do some work
+gamble|Gamble your money|amount|a number, all, or half|true
+leaderboard|Check the leaderboard
+shop|Open the shop
+buy|Buy an item|item|item number|true|quantity|amount to buy, defaults to 1|false
+inventory|Show your inventory
