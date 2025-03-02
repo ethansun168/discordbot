@@ -10,22 +10,16 @@
 
 extern const char* DB_NAME;
 
-struct Option {
-    std::string name;
-    std::string description;
-    bool required;
-};
-
 struct Command {
     std::string name;
     std::string description;  
-    std::vector<Option> options;
+    std::vector<dpp::command_option> options;
 };
 
 struct Item {
     std::string name;
-    int cost;
-    int rate;
+    long cost;
+    long rate;
 };
 
 // sqlite3 RAII
@@ -84,7 +78,7 @@ public:
 };
 
 std::string formatBalance(long balance);
-std::string formatRate(int rate);
+std::string formatRate(long rate);
 bool userExists(const std::string& userID);
 std::vector<std::string> split(const std::string& str, char delim);
 std::vector<Command> parseCommands(const char* filename);

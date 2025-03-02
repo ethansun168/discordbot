@@ -426,7 +426,7 @@ dpp::embed helpEmb() {
         .set_color(dpp::colors::sti_blue)
         .set_title("Help")
         .set_author("The Double L", "", "")
-        .set_description("Help page")
+        .set_description("`[Argument]` is required\n`<Argument>` is optional")
         .set_timestamp(time(0));
     for (const Command& command : commands) {
         // If there is an option, add it to the description
@@ -434,7 +434,12 @@ dpp::embed helpEmb() {
             std::string name = "`" + command.name + "` ";
             std::string desc = "";
             for (size_t i = 0; i < command.options.size(); ++i) {
-                name += "`[" + command.options[i].name + "`] ";
+                if (command.options[i].required) {
+                    name += "`[" + command.options[i].name + "`] ";
+                }
+                else {
+                    name += "`<" + command.options[i].name + "`> ";
+                }
                 desc += "`" + command.options[i].name + "` - " + command.options[i].description + "\n";
             }
             embed.add_field(
@@ -512,20 +517,14 @@ int main(int argc, char* argv[]) {
     bot.on_slashcommand(handleSlashCommand);
  
     bot.on_ready([&bot, &argv](const dpp::ready_t& event) {
+        bot.set_presence(dpp::presence(dpp::ps_online, dpp::at_custom, "Are you ready to take some L's"));
         if (argv[1][0] == 'y' && dpp::run_once<struct register_bot_commands>()) {
             std::cout << "Registering commands..." << std::endl;
             std::vector<dpp::slashcommand> com;
             for (const Command& command : commands) {
                 dpp::slashcommand slash_command(command.name, command.description, bot.me.id);
                 for (size_t i = 0; i < command.options.size(); ++i) {
-                    slash_command.add_option(
-                        dpp::command_option(
-                            dpp::co_string,
-                            command.options[i].name,
-                            command.options[i].description,
-                            command.options[i].required
-                        )
-                    );
+                    slash_command.add_option(command.options[i]);
                 }
                 com.push_back(slash_command);
             }

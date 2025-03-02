@@ -18,7 +18,7 @@ std::string formatBalance(long balance) {
     return "`$" + num_str + "`";
 }
 
-std::string formatRate(int rate) {
+std::string formatRate(long rate) {
     std::string r = formatBalance(rate);
     // Take out first and last character
     r = r.substr(1, r.length() - 2);

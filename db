@@ -46,6 +46,8 @@ case $1 in
 
   "dump")
     sqlite3 -batch -line var/users.sqlite3 'SELECT * FROM users'
+    sqlite3 -batch -line var/users.sqlite3 'SELECT * FROM userItems'
+    sqlite3 -batch -line var/users.sqlite3 'SELECT * FROM items'
     ;;
   *)
     usage
